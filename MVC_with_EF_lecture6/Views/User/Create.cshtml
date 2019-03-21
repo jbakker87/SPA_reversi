@@ -1,0 +1,61 @@
+﻿@model SPA.Models.Player
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1 class="text-light">Register</h1>
+
+<h4 class="text-light">Please provide your authentication information</h4>
+<hr />
+<div class="row text-light">
+    <div class="col-md-6">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <div class="form-group">
+                    <label asp-for="PlayerName" class="control-label"></label>
+                    <input asp-for="PlayerName" class="form-control" />
+                    <span asp-validation-for="PlayerName" class="text-warning"></span>
+                </div>
+                <label asp-for="PlayerEmail" class="control-label"></label>
+                <input asp-for="PlayerEmail" class="form-control" />
+                <span asp-validation-for="PlayerEmail" class="text-warning"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PlayerPassword" class="control-label"></label>
+                <input asp-for="PlayerPassword" class="form-control" />
+                <span asp-validation-for="PlayerPassword" class="text-warning"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PlayerConfirmedPassword" class="control-label"></label>
+                <input asp-for="PlayerConfirmedPassword" class="form-control" />
+                <span asp-validation-for="PlayerConfirmedPassword" class="text-warning"></span>
+            </div>
+            @if (ViewContext.HttpContext.User.IsInRole("Admin"))
+            {
+                <div class="form-group">
+                    <label asp-for="PlayerRole" class="control-label"></label>
+                    <input asp-for="PlayerRole" class="form-control" />
+                    <span asp-validation-for="PlayerRole" class="text-warning"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="PlayerToken" class="control-label"></label>
+                    <input asp-for="PlayerToken" class="form-control" />
+                    <span asp-validation-for="PlayerToken" class="text-warning"></span>
+                </div>
+            }
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-danger" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Go back</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

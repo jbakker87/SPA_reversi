@@ -1,0 +1,32 @@
+﻿@model SPA.Models.Player
+@{
+    ViewData["Title"] = "Login";
+}
+
+<h1 class="text-light">Login</h1>
+<div class="container">
+    <div class="row">
+        <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
+            <div class="card card-signin my-5">
+                <div class="card-body">
+                    <h3 class="card-title text-center">Log In</h3>
+                    <form class="form-signin" method="post" asp-controller="Account" asp-action="Login">
+                        <div class="form-label-group">
+                            <label for="PlayerEmail">Username</label>
+                            <input type="text" Name="PlayerEmail" class="form-control" required>
+                        </div>
+                        <div class="form-label-group">
+                            <label for="PlayerPassword">Password</label>
+                            <input type="password" Name="PlayerPassword" class="form-control" required>
+                        </div>
+                        <label></label>
+                        <button class="btn btn-lg btn-danger btn-block" type="submit">Inloggen</button>
+                    </form>
+                    <div class="form-label-group">
+                        <a class="text-danger" asp-controller="Home" asp-action="Register">Register as a new user?</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

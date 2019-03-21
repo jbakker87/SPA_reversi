@@ -1,0 +1,3 @@
+﻿SPA.reversi = function () {
+
+}();

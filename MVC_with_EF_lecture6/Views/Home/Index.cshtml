@@ -1,0 +1,47 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<link href="~/css/site.css" rel="stylesheet" />
+<div class=" mx-auto">
+    <div class="alert alert-secondary" role="alert">
+        <h1 class="alert-heading">Welcome to reversi playground</h1>
+        <hr />
+        <p><h3>Reversi rules:</h3></p>
+        <p class="mb-0">
+            <strong>
+                Basic rules
+            </strong><br>
+            Each reversi piece has a black side and a white side.
+            On your turn, you place one piece on the board with your color facing up.
+            You must place the piece so that an opponent's piece, or a row of opponent's pieces, is flanked by your pieces.
+            All of the opponent's pieces between your pieces are then turned over to become your color.<br>
+            <strong>
+                Aim of the game
+            </strong><br>
+            The object of the game is to own more pieces than your opponent when the game is over. The game is over when neither player has a move.
+            Usually, this means the board is full.<br>
+            <strong>
+                Start of the game
+            </strong><br>
+            The game is started in the position shown below on a reversi board consisting of 64 squares in an 8x8 grid.<br>
+            <strong>
+                Playing the game
+            </strong><br>
+            A move consists of placing one piece on an empty square.<br>
+            <strong>
+                Capture
+            </strong><br>
+            You can capture vertical, horizontal, and diagonal rows of pieces. Also, you can capture more than one row at once.<br>
+            <strong>
+                Time control
+            </strong><br>
+            A clock is used to limit the length of a game. These clocks count the time that each player separately takes for making his own moves.
+            The rules are very simple, if you run out of time, you lose the game, and thus must budget your time.<br>
+            <strong>
+                End of the game
+            </strong><br>
+            The game ends when one player wins, by making his color dominant on the board or when the players score an equality of points (draw).<br>
+        </p>
+    </div>
+</div>

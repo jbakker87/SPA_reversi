@@ -1,0 +1,72 @@
+﻿@model IEnumerable<SPA.Models.Player>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1 class="text-light">Manage users</h1>
+
+<p>
+    <a asp-action="Create" class="btn btn-success" style="color:white!important">Add a new user</a>
+</p>
+<table class="table text-light">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.PlayerId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PlayerName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PlayerEmail)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PlayerRole)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PlayerToken)
+            </th>
+            @if (User.IsInRole("Admin"))
+            {   
+                <th>
+                    @Html.DisplayNameFor(model => model.PlayerProviderKey)
+                </th>
+                <th>Manage  </th>
+            }
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.PlayerId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PlayerName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PlayerEmail)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PlayerRole)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PlayerToken)
+            </td>
+            @if (User.IsInRole("Admin"))
+            {
+                <td>
+                    @Html.DisplayFor(modelItem => item.PlayerProviderKey)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.PlayerId }) |
+                    @Html.ActionLink("Details", "Details", new { id = item.PlayerId }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.PlayerId })
+                </td>
+            }
+        </tr>
+        }
+    </tbody>
+</table>
