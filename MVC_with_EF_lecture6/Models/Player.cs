@@ -54,9 +54,12 @@ namespace SPA.Models
         public string PlayerName { get; set; }
 
         [ForeignKey("GameId")]
+        public Game Game { get; set; }
+
+        [ForeignKey("Game")]
         public int? GameId { get; set; }
 
-        public Game Game { get; set; }
+
 
     }
 }

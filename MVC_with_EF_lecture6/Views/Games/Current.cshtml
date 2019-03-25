@@ -1,0 +1,30 @@
+﻿@model SPA.Models.Game
+
+@{
+    ViewData["Title"] = "Active";
+}
+@*<<<<<< STYLE >>>>>>*@
+
+<link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<link href="~/css/site.css" rel="stylesheet" />
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+
+@*<<<<<< SCRIPTS >>>>>>*@
+
+<script defer src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script defer src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script defer src="~/js/SPA.js"></script>
+<script defer src="~/js/SPA.Data.js"></script>
+<script defer src="~/js/SPA.model.js"></script>
+<script defer src="~/js/SPA.Reversi.js"></script>
+<script defer src="~/js/SPA.Feedback.js"></script>
+<script defer src="~/js/json.js"></script>
+<script>
+    window.onload = function () {
+        SPA.drawBoard(@Model.GameId);
+    }
+</script>
+<div id="tableDiv"></div>
+

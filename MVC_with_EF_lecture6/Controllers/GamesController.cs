@@ -1,12 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Security.Claims;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 using SPA.DAL;
 using SPA.Models;
 
@@ -33,9 +31,14 @@ namespace SPA.Controllers
         }
 
         // GET: Games
-        public IActionResult Widget()
+        [ActionName("Active")]
+        public async Task<IActionResult> Active(int? id)
         {
-            return View();
+
+            var game = await _context.Game
+                .FirstOrDefaultAsync(m => m.GameId == id);
+
+            return View(game);
         }
 
         // GET: Games/Details/5
@@ -56,6 +59,31 @@ namespace SPA.Controllers
             return View(game);
         }
 
+        // GET: Games/Details/5
+        public async Task<IActionResult> Current(int? id)
+        {
+            Game game = null;
+            if (id == null)
+            {
+                return NotFound();
+            }
+            if (User.Identity.IsAuthenticated)
+            {
+                game = await _context.Game
+                    .FirstOrDefaultAsync(m => m.GameId == id);
+                if (game == null)
+                {
+                    return NotFound();
+                }
+            }
+            else
+            {
+                return RedirectToAction("Login", "Home");
+            }
+
+            return View(game);
+        }
+
         // GET: Games/Create
         public IActionResult Create()
         {
@@ -71,10 +99,11 @@ namespace SPA.Controllers
         {
             if (ModelState.IsValid)
             {
-
                 Player currentPlayer = await _context.Player
                     .Include(g => g.Game)
-                .FirstOrDefaultAsync(m => m.PlayerId == Convert.ToInt32(User.Identity.Name));
+                    .FirstOrDefaultAsync(m => m.PlayerId == Convert.ToInt32(User.Identity.Name));
+
+                game.GameToken = Guid.NewGuid().ToString();
 
                 game.Players.Add(currentPlayer);
                 _context.Add(game);
@@ -82,6 +111,33 @@ namespace SPA.Controllers
                 return RedirectToAction(nameof(Index));
             }
             return View(game);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Join(int? id)
+        {
+
+            if(id == null)
+            {
+                return NotFound();
+            }
+
+            if (ModelState.IsValid)
+            {
+
+                Player joiningPlayer = await _context.Player
+                .FirstOrDefaultAsync(m => m.PlayerId == Convert.ToInt32(User.Identity.Name));
+
+                Game gameToBeJoined = await _context.Game
+                    .Include(p => p.Players)
+                    .FirstOrDefaultAsync(i => i.GameId == id);
+
+                gameToBeJoined.Players.Add(joiningPlayer);
+                _context.Add(gameToBeJoined);
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
+            }
+            return View();
         }
 
         // GET: Games/Edit/5

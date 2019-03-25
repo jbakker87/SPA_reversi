@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 using SPA.DAL;
 using SPA.Models;
 
@@ -33,53 +34,42 @@ namespace SPA.Controllers
         public async Task<ActionResult<Game>> GetGame(int id)
         {
             var game = await _context.Game.FindAsync(id);
-
+            game.Board = JsonConvert.DeserializeObject<int[,]>(game.boardString);
+            
             if (game == null)
             {
                 return NotFound();
             }
-
             return game;
-        }
+        }   
 
-        // PUT: api/game/5
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutGame(int id, Game game)
+        //// POST: api/game
+        //[HttpPost]
+        //public async Task<ActionResult<Game>> PostGame(Game game)
+        //{
+        //    _context.Game.Add(game);
+        //    await _context.SaveChangesAsync();
+
+        //    return CreatedAtAction("GetGame", new { id = game.GameId }, game);
+        //}
+
+
+        // POST: api/game/turn/id
+        [HttpPut("turn/{id}")]
+        public async Task<ActionResult<Game>> PutGame(int? id, Turn turn)
         {
-            if (id != game.GameId)
-            {
-                return BadRequest();
-            }
+            Game game = _context.Game.FirstOrDefault(i => i.GameId == id);
+            game.Board = JsonConvert.DeserializeObject<int[,]>(game.boardString);
+            game.Board[turn.X, turn.Y] = 1;
 
-            _context.Entry(game).State = EntityState.Modified;
+            game.boardString = JsonConvert.SerializeObject(game.Board);
 
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!GameExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
 
-            return NoContent();
-        }
 
-        // POST: api/game
-        [HttpPost]
-        public async Task<ActionResult<Game>> PostGame(Game game)
-        {
-            _context.Game.Add(game);
+            _context.Game.Update(game);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetGame", new { id = game.GameId }, game);
+            return NoContent();
         }
 
         // DELETE: api/game/5

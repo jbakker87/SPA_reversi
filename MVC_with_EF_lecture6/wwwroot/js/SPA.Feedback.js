@@ -1,4 +1,4 @@
-let popUp_Widget = (function () {
+SPA.Feedback = (function () {
 
     function show(title, message, color) {
 
@@ -150,24 +150,8 @@ let popUp_Widget = (function () {
         }
     };
 
-    function feedback () {
-
-        var temp = $("#textbox1").val();
-        //alert(temp);
-        if (temp === "groen") {
-            popUp_Widget.showWhat('Nieuwe deelnemer', 'Naam wilt zich aanmelden voor jouw spel. Geef akkoord.', 'groen');
-        }
-        else if (temp === "rood") {
-            popUp_Widget.showWhat('Er ging iets mis!', 'Je gegevens konden niet worden opgehaald. Dat is balen! Probeer het opnieuw.', 'rood');
-        }
-        else {
-            alert("Onjuiste invoer. Voer in rood of groen");
-        }
-    };
-
     return {
-        showWhat: show,
-        feedback: feedback,
+        show: show,
         msg: _storeMsg
     };
 
